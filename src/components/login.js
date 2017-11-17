@@ -1,11 +1,12 @@
 import React ,{Component} from 'react';
-import {View,Text} from 'react-native'
+import {View,StyleSheet,TouchableOpacity,Text,Dimensions} from 'react-native'
 import {Authentication} from '../store/actions/auth'
-import {Container, Header, Content, Button,Form, Item,Label, Input} from 'native-base'
+import {Container, Header, Body,Content,Right, Button,Form, Item,Label, Input} from 'native-base'
 import {connect} from 'react-redux';
 import {Actions} from 'react-native-router-flux'
 import {Circle} from '../store/actions/circle'
 import firebase from 'firebase'
+import Icon from 'react-native-vector-icons/Ionicons';
 const mapStateToProps=(state)=>({
     localState:state.Auth
 })
@@ -13,6 +14,7 @@ const mapDispatchToProps=(dispatch)=>({
 login:(user)=>Authentication.loginUser(user)    
 })
 
+const {width,height} = Dimensions.get("window")
 class Login extends Component{
     constructor(){
         super();
@@ -28,11 +30,11 @@ class Login extends Component{
 
     render(){
         return(
-            <Container>
+            <Container style={styles.container}>
             <Content>
                 <Form>
-                    <Item rounded >
-                        <Input placeholder="Email"
+                    <Item floatingLabel style={styles.itemInput}>
+                        <Input placeholder="Email" style={{color:"#c4320d"}}
                         onChangeText={(email)=>{
                         this.setState({
                             email:email
@@ -40,24 +42,60 @@ class Login extends Component{
                     }}
                     />
                     </Item>
-                    <Item rounded >
-                        <Input placeholder="Password"
+                    <Item floatingLabel style={styles.itemInput}>
+                        <Input placeholder="Password" style={{color:"#c4320d"}}
+                        type="password" secureTextEntry={true}
                         onChangeText={(password)=>{
                         this.setState({
                             password:password
                         })
                     }}
                     />
-                    </Item>
-                    <Button
+                    </Item><Text>{"\n"}</Text>
+                    <Button style={styles.button} 
                     onPress={this.handle.bind(this)} 
-                    ><Text>Login</Text></Button>
+                    ><Text style={styles.buttonText}>Login</Text></Button>
+                    <Text>{"\n"}</Text>
+                    </Form>
+                    <TouchableOpacity onPress={Actions.register}>
                     
-                </Form>
+                    <View style={{
+                        
+                        alignSelf:"center"
+                        }}>
+                    
+                    <Text style={{
+                        fontSize:17,
+                        color:"#c4320d",}}>
+                        Sign Up</Text>
+                    </View>
+                    </TouchableOpacity>
             </Content>
         </Container>
 
         )
     }
 }
-export default connect(mapStateToProps,mapDispatchToProps)(Login)
+export default connect(mapStateToProps,mapDispatchToProps)(Login);
+const styles=StyleSheet.create({
+    container:{
+        width:width,
+        justifyContent:"center",
+        flexDirection:"row",
+        alignItems:"center"
+    },
+    button:{
+        justifyContent:"center",
+        alignContent:"center",
+        width:"75%",
+        marginHorizontal:28,
+        borderRadius:7,
+        backgroundColor:"#c4320d",
+    },
+    itemInput:{
+        width:"92%"
+    },
+    buttonText:{
+        color:"white"        
+    }
+}) 

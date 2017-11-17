@@ -1,52 +1,66 @@
 import firebase from 'firebase'
 import React ,{Component} from 'react'
-import {View,Text,DrawerLayoutAndroid,TouchableOpacity,TouchableHighlight,AppRegistry} from 'react-native'
+import {View,Text,DrawerLayoutAndroid,TouchableHighlight,AppRegistry} from 'react-native'
 import Routes from './src/components/routes'
 import { Container, Header,Content,Button, List, ListItem, Left, Body, Right, Switch } from 'native-base';
 import {Authentication} from './src/store/actions/auth'
-import Icon from 'react-native-vector-icons/Entypo';
+import Icon from 'react-native-vector-icons/MaterialIcons';
+import Icons from 'react-native-vector-icons/Entypo';
 import {Circle} from './src/store/actions/circle'
-import {store} from './src/store'
+import {store} from './src/store';
+//import {List,ListItem,Container} from 'native-base'
 import {Actions} from 'react-native-router-flux'
 import Login from './src/components/login'
 const SideBarMenu=(props)=>(
-  <View>
-    <TouchableOpacity 
-    onPress={()=>{Actions.login();
+  <Container><List style={{width:"100%",height:"100%",marginLeft:-10,marginTop:5}}>
     
-    }}
-    >
-    <Icon
+    <ListItem  style={{alignItems:"center"}} 
+    onPress={()=>{Actions.login();}}>
+    <Icons 
     name="login"
-    size={40} 
-    color="black"/></TouchableOpacity>
-    <TouchableOpacity onPress={()=>Actions.register()}>
+    size={35} 
+    color="#c4320d"/>
+    </ListItem>
+
+    <ListItem  onPress={()=>Actions.register()} style={{alignItems:"center"}}>
     <Icon
-    name="add-user"
-    size={40} 
-    color="black"/></TouchableOpacity>
-    <TouchableOpacity onPress={()=>Authentication.logout()}>
-    <Icon
+    name="person-add"
+    size={35} 
+    color="#c4320d"/></ListItem>
+
+    <ListItem  onPress={()=>Authentication.logout()} style={{alignItems:"center"}}>
+    <Icons
     name="log-out"
-    size={40} 
-    color="black"/></TouchableOpacity>
-    <TouchableOpacity onPress={()=>{firebase.auth().currentUser?Actions.createcircle():alert("Please Authenticate first")}}>
-    <Icon
-    name="circle-with-plus"
-    size={40} 
-    color="black"/></TouchableOpacity>
-    <TouchableOpacity onPress={()=>{firebase.auth().currentUser?Actions.home():alert("Please Authenticate first")}}>
-    <Icon
+    size={35} 
+    color="#c4320d"/></ListItem>
+
+    <ListItem  style={{alignItems:"center"}} onPress={()=>{firebase.auth().currentUser?Actions.createcircle():alert("Please Authenticate first")}}>
+    <Icon   
+    name="add-circle"
+    size={35} 
+    color="#c4320d"/></ListItem>
+
+    <ListItem  style={{alignItems:"center"}} onPress={()=>{firebase.auth().currentUser?Actions.home():alert("Please Authenticate first")}}>
+    <Icons
     name="location-pin"
-    size={40} 
-    color="black"/></TouchableOpacity>
-    <TouchableOpacity onPress={()=>{firebase.auth().currentUser?Actions.mycircles():alert("Please Authenticate first")}}>
-    <Text>my circles</Text>
-    </TouchableOpacity>
-    <TouchableOpacity onPress={()=>{firebase.auth().currentUser?Actions.join():alert("Please Authenticate first")}}>
-    <Text>Join Circle</Text>
-    </TouchableOpacity>    
-    </View>
+    size={35} 
+    color="#c4320d"/></ListItem>
+
+    <ListItem  style={{alignItems:"center"}} onPress={()=>{firebase.auth().currentUser?Actions.mycircles():alert("Please Authenticate first")}}>
+    <Icon
+    name="check-circle"
+    size={35} 
+    color="#c4320d"/>
+    </ListItem>
+
+    <ListItem  style={{alignItems:"center"}} onPress={()=>{firebase.auth().currentUser?Actions.join():alert("Please Authenticate first")}}>
+    <Icon
+    name="group-add"
+    size={35} 
+    color="#c4320d"/>
+    </ListItem>
+    </List>    
+    </Container>
 )
 
 class App extends Component {
@@ -66,10 +80,10 @@ componentDidMount(){
 }
     render() {
         return (
-            <DrawerLayoutAndroid style={{backgroundColor:"green"}}
-              drawerWidth={100}          
+            <DrawerLayoutAndroid 
+              drawerWidth={80}          
               onTouchEnd={this.closeDrawer}  
-              drawerBackgroundColor="blue"
+              drawerBackgroundColor="white"
               ref={(_drawer) => this.drawer = _drawer}
               drawerPosition={DrawerLayoutAndroid.positions.Left}
               renderNavigationView={() => <SideBarMenu

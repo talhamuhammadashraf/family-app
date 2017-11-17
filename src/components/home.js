@@ -1,13 +1,20 @@
+import Icon from 'react-native-vector-icons/Entypo';
+import {Button,Header,Title,Left,Body,Container,Right,Content,Spinner} from 'native-base'
 import React, { Component } from 'react';
-import { View, StyleSheet, Text } from 'react-native'
+// import Icon from 'react-native-vector-icons/Entypo';
+// import  {Button,Container,Header,Left,Body} from 'native-base'
+import { View, StyleSheet, Text ,Dimensions} from 'react-native'
 import MapView from 'react-native-maps'
 import { Circle } from '../store/actions/circle';
-import { connect } from 'react-redux'
+import { connect } from 'react-redux';
+import {Actions} from 'react-native-router-flux'
+const {width,height} = Dimensions.get("window")
 const styles = StyleSheet.create({
     container: {
         ...StyleSheet.absoluteFillObject,
-        height: 400,
-        width: 400,
+        height: height,
+        flex:1,
+        width: width,
         justifyContent: 'flex-end',
         alignItems: 'center',
     },
@@ -31,7 +38,9 @@ class Home extends Component {
         }
     }
     componentWillMount() {
-        Circle.getMembers(this.props.info)
+        this.props.info?
+        Circle.getMembers(this.props.info):
+        console.log("no circle ID")
     }
     componentDidMount() {
         this.watchID = navigator.geolocation.watchPosition((position) => {
@@ -50,7 +59,18 @@ class Home extends Component {
         const { region } = this.props;
         console.log(region);
         return (
-            <View style={styles.container}>
+            <Container style={styles.container}>
+            <Left>
+                <Button style={{
+                    zIndex:3,
+                    backgroundColor:"#c4320d",
+                    alignContent:"flex-start",
+                    marginLeft:-width*0.5,
+                    // borderRadius:30
+                }} onPress={Actions.pop}>
+                <Icon color="white" name="chevron-thin-left" size={30}/>
+                </Button>
+            </Left>
                 <MapView
                     //        onRegionChange={(region) => this.onRegionChange(region)}
                     showsMyLocationButton={true}
@@ -72,7 +92,7 @@ class Home extends Component {
                     }
        
                 </MapView>
-            </View>)
+            </Container>)
     }
 }
 export default connect(mapStateToProps)(Home)

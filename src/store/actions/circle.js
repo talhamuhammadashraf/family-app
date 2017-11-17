@@ -84,7 +84,7 @@ firebase.database().ref("/"+"Circle").child(CircleKey).child("members").once(
     }
 )
 console.log(admin)
-setTimeout(()=>{store.dispatch(Circle.membersSuccess(admin,MemberArray))},2000)
+setTimeout(()=>{store.dispatch(Circle.membersSuccess(admin,MemberArray))},600)
 
 }    
 
@@ -108,8 +108,10 @@ static inviteMember=(uid)=>{
     console.log(alphaNum);
 
 store.dispatch(Circle.invite());
-firebase.database().ref("Circle").child(uid).child("inviteKey").set(alphaNum)
-store.dispatch(Circle.inviteSuccess(alphaNum))
+firebase.database().ref("Circle").child(uid).child("inviteKey").set(alphaNum);
+firebase.database().ref("Circle").child(uid).child("inviteKey").once("value",(snap)=>{var invite=snap.val()
+    store.dispatch(Circle.inviteSuccess(invite))
+})
 }
 static invite=()=>({type:"Invite"})
 static inviteSuccess=(payload)=>({type:"Invite Success",payload:payload})

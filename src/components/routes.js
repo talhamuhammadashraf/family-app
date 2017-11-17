@@ -10,18 +10,19 @@ import {Provider} from 'react-redux'
 import CreateCircle from './createCircle'
 import JoinCircle from './joinCircle'
 import ShowMembers from './showMembers'
+import AnimatComp from './animation'
 class Routes extends Component{
     render(){
         return(<Provider store={store}>
             <Router>
             <Scene key="root">
-              <Scene key="mycircles"   component={MyCircles} title="My Circles" hideNavBar={true}/>                          
-              <Scene   key="home" component={Home} title="Location Map" hideNavBar={true}/>
-              <Scene  key="login" initial={true} component={Login} title="Login" hideNavBar={true}/>
-              <Scene key="register"  component={Register} title="Register" hideNavBar={true}/>
-              <Scene key="createcircle"  component={CreateCircle} title="Create Circle" hideNavBar={true}/>            
+              <Scene key="mycircles"    component={MyCircles}   title="My Circles" hideNavBar={true}  />                          
+              <Scene key="home"         component={Home}        title="Location Map" hideNavBar={true}/>
+              <Scene key="login"        component={Login}       title="Login" hideNavBar={true} initial={true}/>
+              <Scene key="register"     component={Register}    title="Register" hideNavBar={true}/>
+              <Scene key="createcircle" component={CreateCircle}title="Create Circle" hideNavBar={true}/>            
               <Scene key="showmembers"  component={ShowMembers} title="Members" hideNavBar={true}/>                          
-              <Scene key="join"  component={JoinCircle} title="Join Circle" hideNavBar={true}/>                          
+              <Scene key="join"         component={JoinCircle}  title="Join Circle" hideNavBar={true}/>                          
             </Scene>
           </Router></Provider>
         )
